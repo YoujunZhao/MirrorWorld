@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07080b">
+    <meta name="description" content="MirrorWorld is a reflection-aware video inpainting framework that learns what scene content should be reflected and how it should be arranged in the mirror.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://youjunzhao.github.io/MirrorWorld/">
+    <meta property="og:title" content="MirrorWorld: Taming Video Diffusion Models for Mirror Reflection Generation">
+    <meta property="og:description" content="Reflection-aware video generation through Semantic Relation Distillation and Geometric Transformation Alignment.">
+    <meta name="twitter:card" content="summary_large_image">
+    <title>MirrorWorld: Taming Video Diffusion Models for Mirror Reflection Generation</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>document.documentElement.classList.add('js');</script>
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-header" aria-label="Primary navigation">
+      <nav class="nav-shell">
+        <a class="wordmark" href="#overview" aria-label="MirrorWorld home">
+          <span class="wordmark-mark" aria-hidden="true"></span>
+          <span>MirrorWorld</span>
+        </a>
+        <div class="nav-links" aria-label="Page sections">
+          <a href="#overview" data-nav-link>Overview</a>
+          <a href="#results" data-nav-link>Results</a>
+          <a href="#method" data-nav-link>Method</a>
+          <a href="#benchmark" data-nav-link>Benchmark</a>
+          <a href="#bibtex" data-nav-link>BibTeX</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main-content">
+      <section class="hero section-shell" id="overview" data-section>
+        <div class="hero-copy reveal">
+          <p class="eyebrow"><span></span> Video mirror reflection generation</p>
+          <h1>
+            <span class="title-mirror">MirrorWorld</span>
+            <span>Taming Video Diffusion Models for<br>Mirror Reflection Generation</span>
+          </h1>
+
+          <div class="authors" aria-label="Authors">
+            <span>Youjun Zhao<sup>1</sup></span>
+            <span>Alex Warren<sup>2</sup></span>
+            <span>Gary K.L. Tam<sup>2</sup></span>
+            <span>Rynson W.H. Lau<sup>1</sup></span>
+          </div>
+          <p class="affiliations">
+            <span><sup>1</sup>City University of Hong Kong</span>
+            <span><sup>2</sup>Swansea University</span>
+          </p>
+
+          <p class="hero-lede">
+            A reflection-aware video inpainting framework that learns
+            <strong>what</strong> the scene should reflect and <strong>how</strong>
+            that content should be arranged inside the mirror.
+          </p>
+
+          <div class="hero-actions">
+            <button class="button button-disabled" type="button" disabled aria-disabled="true">
+              <span aria-hidden="true">↗</span> Paper · Coming soon
+            </button>
+            <a class="button button-primary" href="https://github.com/YoujunZhao/MirrorWorld">
+              <span aria-hidden="true">⌘</span> Code
+            </a>
+            <a class="button button-ghost" href="#results">
+              Explore results <span aria-hidden="true">↓</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-stage reveal" aria-label="Selected MirrorWorld video results">
+          <div class="hero-glow" aria-hidden="true"></div>
+          <article class="hero-video hero-video-wide">
+            <video src="static/videos/showcase/figure-f-bathroom.mp4" autoplay muted loop playsinline preload="metadata" aria-label="MirrorWorld result in a bathroom scene"></video>
+            <span class="video-chip">MirrorWorld</span>
+          </article>
+          <article class="hero-video">
+            <video src="static/videos/showcase/figure-d-scene0084-01.mp4" autoplay muted loop playsinline preload="metadata" aria-label="MirrorWorld result for scene 0084"></video>
+            <span class="video-index">01</span>
+          </article>
+          <article class="hero-video">
+            <video src="static/videos/showcase/figure-g-vmdd-015.mp4" autoplay muted loop playsinline preload="metadata" aria-label="MirrorWorld result from VMD-D"></video>
+            <span class="video-index">02</span>
+          </article>
+        </div>
+
+        <div class="hero-note reveal" aria-hidden="true">
+          <span>Real scenes</span>
+          <i></i>
+          <span>Reconstructed reflections</span>
+          <i></i>
+          <span>Temporally consistent</span>
+        </div>
+      </section>
+
+      <section class="statement section-shell" aria-labelledby="statement-title">
+        <div class="statement-number reveal" aria-hidden="true">01</div>
+        <div class="statement-copy reveal">
+          <p class="section-kicker">The challenge</p>
+          <h2 id="statement-title">A mirror is not an empty canvas.</h2>
+          <p>
+            Its content is constrained by the visible world. Existing video diffusion
+            models can synthesize a convincing room yet place the wrong object, person,
+            or geometry inside its mirror. MirrorWorld explicitly models that
+            scene-to-mirror relationship.
+          </p>
+        </div>
+        <figure class="paper-figure teaser-figure reveal">
+          <img src="static/images/teaser.webp" alt="Examples where a video generator creates inconsistent mirror reflections for a chair, suitcase, and kettle" loading="lazy">
+          <figcaption>Advanced video generators remain visually convincing while getting the reflection wrong.</figcaption>
+        </figure>
+      </section>
+
+      <section class="abstract section-shell" aria-labelledby="abstract-title">
+        <div class="section-heading reveal">
+          <p class="section-kicker">Abstract</p>
+          <h2 id="abstract-title">Connecting the visible scene to its reflection.</h2>
+        </div>
+        <div class="abstract-layout">
+          <p class="abstract-copy reveal">
+            Recent video diffusion models generate high-fidelity content, but mirror
+            reflections remain challenging because the content inside a mirror must stay
+            consistent with its surrounding scene. We introduce <strong>MirrorWorld</strong>,
+            a reflection-aware video inpainting framework. <strong>Semantic Relation
+            Distillation</strong> transfers relational information from a frozen visual
+            foundation model to identify reflection-relevant scene content, while
+            <strong>Geometric Transformation Alignment</strong> learns how that content
+            should be spatially arranged. We also repurpose four video mirror datasets
+            into a unified reflection reconstruction benchmark.
+          </p>
+          <dl class="fact-grid reveal">
+            <div><dt>1,242</dt><dd>video clips</dd></div>
+            <div><dt>4</dt><dd>source datasets</dd></div>
+            <div><dt>14.005</dt><dd>PSNR in mirrors</dd></div>
+            <div><dt>184.868</dt><dd>FVD</dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="results section-shell section-wide" id="results" data-section aria-labelledby="results-title">
+        <div class="section-heading results-heading reveal">
+          <div>
+            <p class="section-kicker">Qualitative comparison</p>
+            <h2 id="results-title">The same scene. A more faithful mirror.</h2>
+          </div>
+          <p>All methods receive the same masked video, mirror mask, and text prompt.</p>
+        </div>
+
+        <article class="comparison-case reveal" data-video-group="scene-0232">
+          <header class="comparison-header">
+            <div>
+              <p class="case-number">Case 01 · Figure 2</p>
+              <h3>Scene 0232</h3>
+            </div>
+            <button class="video-toggle" type="button" data-toggle-group="scene-0232" aria-pressed="false">
+              <span class="toggle-icon" aria-hidden="true">Ⅱ</span>
+              <span class="toggle-label">Pause all</span>
+            </button>
+          </header>
+          <div class="comparison-grid" role="group" aria-label="Scene 0232 method comparison">
+            <figure class="comparison-card input-card">
+              <div class="video-frame"><video src="static/videos/comparison/scene-0232/input.mp4" muted loop playsinline preload="metadata" aria-label="Masked input for scene 0232"></video></div>
+              <figcaption><span>Input</span><small>Masked mirror</small></figcaption>
+            </figure>
+            <figure class="comparison-card">
+              <div class="video-frame"><video src="static/videos/comparison/scene-0232/mirrorfusion.mp4" muted loop playsinline preload="metadata" aria-label="MirrorFusion result for scene 0232"></video></div>
+              <figcaption><span>MirrorFusion</span><small>Image-based</small></figcaption>
+            </figure>
+            <figure class="comparison-card">
+              <div class="video-frame"><video src="static/videos/comparison/scene-0232/mirrorverse.mp4" muted loop playsinline preload="metadata" aria-label="MirrorVerse result for scene 0232"></video></div>
+              <figcaption><span>MirrorVerse</span><small>Image-based</small></figcaption>
+            </figure>
+            <figure class="comparison-card">
+              <div class="video-frame"><video src="static/videos/comparison/scene-0232/videopainter.mp4" muted loop playsinline preload="metadata" aria-label="VideoPainter result for scene 0232"></video></div>
+              <figcaption><span>VideoPainter</span><small>Video inpainting</small></figcaption>
+            </figure>
+            <figure class="comparison-card">
+              <div class="video-frame"><video src="static/videos/comparison/scene-0232/vace.mp4" muted loop playsinline preload="metadata" aria-label="VACE result for scene 0232"></video></div>
+              <figcaption><span>VACE</span><small>Video inpainting</small></figcaption>
+            </figure>
+            <figure class="comparison-card ours-card">
+              <div class="video-frame"><video src="static/videos/comparison/scene-0232/mirrorworld.mp4" muted loop playsinline preload="metadata" aria-label="MirrorWorld result for scene 0232"></video></div>
+              <figcaption><span>MirrorWorld</span><small>Ours</small></figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article class="comparison-case reveal" data-video-group="scene-0084">
+          <header class="comparison-header">
+            <div>
+              <p class="case-number">Case 02 · Figure 2</p>
+              <h3>Scene 0084</h3>
+            </div>
+            <button class="video-toggle" type="button" data-toggle-group="scene-0084" aria-pressed="false">
+              <span class="toggle-icon" aria-hidden="true">Ⅱ</span>
+              <span class="toggle-label">Pause all</span>
+            </button>
+          </header>
+          <div class="comparison-grid" role="group" aria-label="Scene 0084 method comparison">
+            <figure class="comparison-card input-card">
+              <div class="video-frame"><video src="static/videos/comparison/scene-0084/input.mp4" muted loop playsinline preload="metadata" aria-label="Masked input for scene 0084"></video></div>
+              <figcaption><span>Input</span><small>Masked mirror</small></figcaption>
+            </figure>
+            <figure class="comparison-card">
+              <div class="video-frame"><video src="static/videos/comparison/scene-0084/mirrorfusion.mp4" muted loop playsinline preload="metadata" aria-label="MirrorFusion result for scene 0084"></video></div>
+              <figcaption><span>MirrorFusion</span><small>Image-based</small></figcaption>
+            </figure>
+            <figure class="comparison-card">
+              <div class="video-frame"><video src="static/videos/comparison/scene-0084/mirrorverse.mp4" muted loop playsinline preload="metadata" aria-label="MirrorVerse result for scene 0084"></video></div>
+              <figcaption><span>MirrorVerse</span><small>Image-based</small></figcaption>
+            </figure>
+            <figure class="comparison-card">
+              <div class="video-frame"><video src="static/videos/comparison/scene-0084/videopainter.mp4" muted loop playsinline preload="metadata" aria-label="VideoPainter result for scene 0084"></video></div>
+              <figcaption><span>VideoPainter</span><small>Video inpainting</small></figcaption>
+            </figure>
+            <figure class="comparison-card">
+              <div class="video-frame"><video src="static/videos/comparison/scene-0084/vace.mp4" muted loop playsinline preload="metadata" aria-label="VACE result for scene 0084"></video></div>
+              <figcaption><span>VACE</span><small>Video inpainting</small></figcaption>
+            </figure>
+            <figure class="comparison-card ours-card">
+              <div class="video-frame"><video src="static/videos/comparison/scene-0084/mirrorworld.mp4" muted loop playsinline preload="metadata" aria-label="MirrorWorld result for scene 0084"></video></div>
+              <figcaption><span>MirrorWorld</span><small>Ours</small></figcaption>
+            </figure>
+          </div>
+        </article>
+      </section>
+
+      <section class="showcase section-shell section-wide" aria-labelledby="showcase-title">
+        <div class="section-heading reveal">
+          <p class="section-kicker">More MirrorWorld results</p>
+          <h2 id="showcase-title">Reflections across spaces, motion, and viewpoints.</h2>
+        </div>
+        <div class="showcase-grid">
+          <figure class="result-card result-card-featured reveal">
+            <video class="ambient-video" src="static/videos/showcase/figure-d-scene0084-01.mp4" controls muted loop playsinline preload="metadata" aria-label="MirrorWorld result, Figure D, scene 0084"></video>
+            <figcaption><span>Figure D</span><strong>Scene 0084 · moving camera</strong></figcaption>
+          </figure>
+          <figure class="result-card reveal">
+            <video class="ambient-video" src="static/videos/showcase/figure-e-scene0268.mp4" controls muted loop playsinline preload="metadata" aria-label="MirrorWorld result, Figure E, scene 0268"></video>
+            <figcaption><span>Figure E</span><strong>Scene 0268</strong></figcaption>
+          </figure>
+          <figure class="result-card reveal">
+            <video class="ambient-video" src="static/videos/showcase/figure-f-scene0083.mp4" controls muted loop playsinline preload="metadata" aria-label="MirrorWorld result, Figure F, scene 0083"></video>
+            <figcaption><span>Figure F</span><strong>Scene 0083</strong></figcaption>
+          </figure>
+          <figure class="result-card result-card-tall reveal">
+            <video class="ambient-video" src="static/videos/showcase/figure-g-zoom-vid42.mp4" controls muted loop playsinline preload="metadata" aria-label="MirrorWorld result on ZOOM video 42"></video>
+            <figcaption><span>Figure G · ZOOM</span><strong>Video 42</strong></figcaption>
+          </figure>
+          <figure class="result-card reveal">
+            <video class="ambient-video" src="static/videos/showcase/figure-f-scene0165.mp4" controls muted loop playsinline preload="metadata" aria-label="MirrorWorld result, Figure F, scene 0165"></video>
+            <figcaption><span>Figure F</span><strong>Scene 0165</strong></figcaption>
+          </figure>
+          <figure class="result-card reveal">
+            <video class="ambient-video" src="static/videos/showcase/figure-f-bathroom.mp4" controls muted loop playsinline preload="metadata" aria-label="MirrorWorld result in bathroom scene 0002"></video>
+            <figcaption><span>Figure F</span><strong>Bathroom 0002</strong></figcaption>
+          </figure>
+          <figure class="result-card reveal">
+            <video class="ambient-video" src="static/videos/showcase/figure-g-vmdd-015.mp4" controls muted loop playsinline preload="metadata" aria-label="MirrorWorld result on VMD-D scene 015"></video>
+            <figcaption><span>Figure G · VMD-D</span><strong>Scene 015</strong></figcaption>
+          </figure>
+          <figure class="result-card result-card-wide reveal">
+            <video class="ambient-video" src="static/videos/showcase/figure-g-vmdd-080.mp4" controls muted loop playsinline preload="metadata" aria-label="MirrorWorld result on VMD-D scene 080"></video>
+            <figcaption><span>Figure G · VMD-D</span><strong>Scene 080</strong></figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="method section-shell" id="method" data-section aria-labelledby="method-title">
+        <div class="section-heading method-heading reveal">
+          <div>
+            <p class="section-kicker">Method</p>
+            <h2 id="method-title">What to reflect.<br>How to reflect it.</h2>
+          </div>
+          <p>
+            Two complementary training objectives align the visible scene and mirror
+            region. Auxiliary modules are used during training; inference retains the
+            adapted video generator.
+          </p>
+        </div>
+
+        <figure class="paper-figure framework-figure reveal">
+          <img src="static/images/framework.webp" alt="MirrorWorld architecture with Semantic Relation Distillation and Geometric Transformation Alignment" loading="lazy">
+          <figcaption>MirrorWorld trains a Wan2.1-VACE-14B backbone with reflection-specific semantic and geometric supervision.</figcaption>
+        </figure>
+
+        <div class="method-cards">
+          <article class="method-card reveal">
+            <p class="method-index">01 / What</p>
+            <h3>Semantic Relation Distillation</h3>
+            <p>
+              A frozen VideoMAEv2 teacher transfers relational structure between tokens
+              inside and outside the mirror. The diffusion model learns which visible
+              content is relevant to the missing reflection.
+            </p>
+            <span class="method-tag">Semantic association</span>
+          </article>
+          <article class="method-card reveal">
+            <p class="method-index">02 / How</p>
+            <h3>Geometric Transformation Alignment</h3>
+            <p>
+              A transformation regressor uses a five-frame local temporal window to
+              warp visible features toward the mirror region, guiding their spatial
+              configuration over time.
+            </p>
+            <span class="method-tag">Spatial arrangement</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="benchmark section-shell" id="benchmark" data-section aria-labelledby="benchmark-title">
+        <div class="section-heading benchmark-heading reveal">
+          <div>
+            <p class="section-kicker">Benchmark</p>
+            <h2 id="benchmark-title">A unified test for video mirror reconstruction.</h2>
+          </div>
+          <p>
+            We repurpose VMD-D, ZOOM, MMD, and DVMD-D into one reflection-aware
+            reconstruction task, split at the source-video level.
+          </p>
+        </div>
+
+        <div class="benchmark-strip reveal" aria-label="Benchmark statistics">
+          <div><strong>1,142</strong><span>train clips</span></div>
+          <div><strong>100</strong><span>test clips</span></div>
+          <div><strong>≤49</strong><span>frames per clip</span></div>
+          <div><strong>4</strong><span>datasets</span></div>
+        </div>
+
+        <div class="table-card reveal">
+          <div class="table-intro">
+            <div>
+              <p class="case-number">Quantitative evaluation</p>
+              <h3>Mirror-region reconstruction and video quality</h3>
+            </div>
+            <p>Best results are highlighted. PSNR, SSIM, and LPIPS are computed inside mirror regions.</p>
+          </div>
+          <div class="table-scroll" tabindex="0" aria-label="Scrollable quantitative results table">
+            <table>
+              <thead>
+                <tr><th>Method</th><th>Type</th><th>PSNR ↑</th><th>SSIM ↑</th><th>LPIPS ↓</th><th>FVD ↓</th></tr>
+              </thead>
+              <tbody>
+                <tr><th>MirrorFusion</th><td>Image</td><td>9.508</td><td>0.293</td><td>0.699</td><td>513.062</td></tr>
+                <tr><th>MirrorVerse</th><td>Image</td><td>9.666</td><td>0.312</td><td>0.680</td><td>416.146</td></tr>
+                <tr><th>VideoPainter</th><td>Video</td><td>11.282</td><td>0.399</td><td>0.606</td><td>229.558</td></tr>
+                <tr><th>VACE</th><td>Video</td><td><u>13.537</u></td><td><u>0.489</u></td><td><u>0.493</u></td><td><u>191.617</u></td></tr>
+                <tr class="ours-row"><th>MirrorWorld <span>Ours</span></th><td>Video</td><td><strong>14.005</strong></td><td><strong>0.504</strong></td><td><strong>0.488</strong></td><td><strong>184.868</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <figure class="paper-figure qualitative-figure reveal">
+          <img src="static/images/qualitative.webp" alt="Frame-level qualitative comparison of MirrorWorld with MirrorFusion, MirrorVerse, VideoPainter, and VACE" loading="lazy">
+          <figcaption>Frame-level view from the paper. The interactive videos above show the corresponding temporal behavior.</figcaption>
+        </figure>
+      </section>
+
+      <section class="citation section-shell" id="bibtex" data-section aria-labelledby="bibtex-title">
+        <div class="section-heading citation-heading reveal">
+          <div>
+            <p class="section-kicker">Citation</p>
+            <h2 id="bibtex-title">BibTeX</h2>
+          </div>
+          <p>BibTeX placeholder — final publication metadata will be added after release.</p>
+        </div>
+        <div class="code-card reveal">
+          <button class="copy-button" type="button" data-copy-bibtex>
+            <span class="copy-icon" aria-hidden="true">□</span>
+            <span class="copy-label">Copy BibTeX</span>
+          </button>
+          <pre id="bibtex-code" tabindex="0"><code>@article{mirrorworld2026,
+  title   = {MirrorWorld: Taming Video Diffusion Models for Mirror Reflection Generation},
+  author  = {Zhao, Youjun and Warren, Alex and Tam, Gary K. L. and Lau, Rynson W. H.},
+  journal = {arXiv preprint},
+  year    = {2026},
+  note    = {BibTeX placeholder; update with final publication metadata}
+}</code></pre>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="section-shell footer-inner">
+        <div>
+          <a class="wordmark footer-mark" href="#overview"><span class="wordmark-mark" aria-hidden="true"></span>MirrorWorld</a>
+          <p>Taming Video Diffusion Models for Mirror Reflection Generation</p>
+        </div>
+        <p class="footer-note">
+          Research demonstrations are presented for academic communication. All shown
+          videos are sourced from the paper's benchmark and method outputs.
+        </p>
+        <a class="back-to-top" href="#overview">Back to top ↑</a>
+      </div>
+    </footer>
+  </body>
+</html>
