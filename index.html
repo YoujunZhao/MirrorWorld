@@ -15,12 +15,12 @@
     <script>document.documentElement.classList.add('js');</script>
     <script src="script.js" defer></script>
   </head>
-  <body>
+  <body id="top">
     <a class="skip-link" href="#main-content">Skip to content</a>
 
     <header class="site-header" aria-label="Primary navigation">
       <nav class="nav-shell">
-        <a class="wordmark" href="#overview" aria-label="MirrorWorld home">
+        <a class="wordmark" href="#top" aria-label="MirrorWorld home">
           <span class="wordmark-mark" aria-hidden="true"></span>
           <span>MirrorWorld</span>
         </a>
@@ -35,12 +35,21 @@
     </header>
 
     <main id="main-content">
-      <section class="hero section-shell" id="overview" data-section>
+      <section class="hero hero-stage">
+        <video
+          class="hero-background-video ambient-video"
+          src="static/videos/hero/mirrorworld-hero-mosaic.mp4"
+          muted
+          loop
+          playsinline
+          preload="auto"
+          aria-hidden="true"
+        ></video>
+        <div class="hero-video-scrim" aria-hidden="true"></div>
         <div class="hero-copy reveal">
-          <p class="eyebrow"><span></span> Video mirror reflection generation</p>
           <h1>
             <span class="title-mirror">MirrorWorld</span>
-            <span>Taming Video Diffusion Models for<br>Mirror Reflection Generation</span>
+            <span class="title-subtitle">Taming Video Diffusion Models for Mirror Reflection Generation</span>
           </h1>
 
           <div class="authors" aria-label="Authors">
@@ -54,47 +63,51 @@
             <span><sup>2</sup>Swansea University</span>
           </p>
 
-          <p class="hero-lede">
-            A reflection-aware video inpainting framework that learns
-            <strong>what</strong> the scene should reflect and <strong>how</strong>
-            that content should be arranged inside the mirror.
-          </p>
-
           <div class="hero-actions">
-            <button class="button button-disabled" type="button" disabled aria-disabled="true">
-              <span aria-hidden="true">↗</span> Paper · Coming soon
-            </button>
+            <a class="button button-primary" href="https://youjunzhao.github.io/MirrorWorld/">Arxiv</a>
             <a class="button button-primary" href="https://github.com/YoujunZhao/MirrorWorld">
-              <span aria-hidden="true">⌘</span> Code
+              Code
             </a>
-            <a class="button button-ghost" href="#results">
-              Explore results <span aria-hidden="true">↓</span>
-            </a>
+            <a class="button button-primary" href="https://youjunzhao.github.io/MirrorWorld/">Hugging Face</a>
           </div>
         </div>
+      </section>
 
-        <div class="hero-stage reveal" aria-label="Selected MirrorWorld video results">
-          <div class="hero-glow" aria-hidden="true"></div>
-          <article class="hero-video hero-video-wide">
-            <video src="static/videos/showcase/figure-f-bathroom.mp4" autoplay muted loop playsinline preload="metadata" aria-label="MirrorWorld result in a bathroom scene"></video>
-            <span class="video-chip">MirrorWorld</span>
-          </article>
-          <article class="hero-video">
-            <video src="static/videos/showcase/figure-d-scene0084-01.mp4" autoplay muted loop playsinline preload="metadata" aria-label="MirrorWorld result for scene 0084"></video>
-            <span class="video-index">01</span>
-          </article>
-          <article class="hero-video">
-            <video src="static/videos/showcase/figure-g-vmdd-015.mp4" autoplay muted loop playsinline preload="metadata" aria-label="MirrorWorld result from VMD-D"></video>
-            <span class="video-index">02</span>
-          </article>
+      <section class="project-overview section-shell section-wide" id="overview" data-section aria-labelledby="overview-title">
+        <div class="section-heading section-heading-centered overview-heading reveal">
+          <p class="section-kicker">Paper overview</p>
+          <h2 id="overview-title">Overview</h2>
         </div>
-
-        <div class="hero-note reveal" aria-hidden="true">
-          <span>Real scenes</span>
-          <i></i>
-          <span>Reconstructed reflections</span>
-          <i></i>
-          <span>Temporally consistent</span>
+        <div class="overview-columns">
+          <article class="overview-abstract reveal" aria-labelledby="abstract-title">
+            <h3 id="abstract-title">Abstract</h3>
+            <p class="abstract-copy full-abstract">
+              Recent advances in video diffusion models (VDMs) have enabled high-fidelity video synthesis. However, generating mirror reflections remains challenging because the content within a mirror must remain consistent with the surrounding scene. Existing VDMs are not specifically designed to model scene-to-mirror relationships, which can lead to reflections with incorrect content or inconsistent spatial arrangements. We observe that mirror reflection generation involves two complementary challenges: determining what scene content should be reflected and how the reflected content should be spatially arranged within the mirror region. Motivated by this observation, we propose <mark>MirrorWorld</mark>, a reflection-aware video inpainting framework that models scene-to-mirror relationships during generation. Specifically, we introduce <mark>Semantic Relation Distillation (SRD)</mark>, which transfers relational information from a frozen visual foundation model to encourage semantic associations between visible scene content and mirror regions. We further propose <mark>Geometric Transformation Alignment (GTA)</mark>, which learns a transformation that guides the spatial arrangement of reflected content. The two components play complementary roles, with SRD modeling <mark>what should be reflected</mark> and GTA modeling <mark>how it should be arranged</mark>. To facilitate research on this problem, we construct a <mark>benchmark for video mirror reflection generation</mark> by repurposing four existing video mirror datasets into a unified reflection reconstruction task. <mark>Experimental results show that MirrorWorld achieves improved reflection reconstruction quality over representative image-based reflection generation methods and strong video inpainting baselines.</mark>
+            </p>
+          </article>
+          <article class="overview-task reveal" aria-labelledby="task-title">
+            <p class="section-kicker">The task</p>
+            <h3 id="task-title">From a masked mirror to a faithful reflection.</h3>
+            <p class="overview-task-copy">MirrorWorld reconstructs the missing mirror region while preserving its semantic and geometric relationship with the visible scene.</p>
+            <div class="task-video-grid" data-video-group="overview-task" role="group" aria-label="Two task examples comparing masked inputs and generated videos">
+              <figure class="task-video-card">
+                <figcaption>Input video with mask</figcaption>
+                <video src="static/videos/task/vmdd-080-mask.mp4" controls autoplay muted loop playsinline preload="metadata" aria-label="Masked input video for the first task example"></video>
+              </figure>
+              <figure class="task-video-card">
+                <figcaption>Generated video</figcaption>
+                <video src="static/videos/showcase/figure-g-vmdd-080.mp4" controls autoplay muted loop playsinline preload="metadata" aria-label="Generated video for the first task example"></video>
+              </figure>
+              <figure class="task-video-card">
+                <figcaption>Input video with mask</figcaption>
+                <video src="static/videos/task/scene0084-01-mask.mp4" controls autoplay muted loop playsinline preload="metadata" aria-label="Masked input video for the second task example"></video>
+              </figure>
+              <figure class="task-video-card">
+                <figcaption>Generated video</figcaption>
+                <video src="static/videos/showcase/figure-d-scene0084-01.mp4" controls autoplay muted loop playsinline preload="metadata" aria-label="Generated video for the second task example"></video>
+              </figure>
+            </div>
+          </article>
         </div>
       </section>
 
@@ -114,32 +127,6 @@
           <img src="static/images/teaser.webp" alt="Examples where a video generator creates inconsistent mirror reflections for a chair, suitcase, and kettle" loading="lazy">
           <figcaption>Advanced video generators remain visually convincing while getting the reflection wrong.</figcaption>
         </figure>
-      </section>
-
-      <section class="abstract section-shell" aria-labelledby="abstract-title">
-        <div class="section-heading reveal">
-          <p class="section-kicker">Abstract</p>
-          <h2 id="abstract-title">Connecting the visible scene to its reflection.</h2>
-        </div>
-        <div class="abstract-layout">
-          <p class="abstract-copy reveal">
-            Recent video diffusion models generate high-fidelity content, but mirror
-            reflections remain challenging because the content inside a mirror must stay
-            consistent with its surrounding scene. We introduce <strong>MirrorWorld</strong>,
-            a reflection-aware video inpainting framework. <strong>Semantic Relation
-            Distillation</strong> transfers relational information from a frozen visual
-            foundation model to identify reflection-relevant scene content, while
-            <strong>Geometric Transformation Alignment</strong> learns how that content
-            should be spatially arranged. We also repurpose four video mirror datasets
-            into a unified reflection reconstruction benchmark.
-          </p>
-          <dl class="fact-grid reveal">
-            <div><dt>1,242</dt><dd>video clips</dd></div>
-            <div><dt>4</dt><dd>source datasets</dd></div>
-            <div><dt>14.005</dt><dd>PSNR in mirrors</dd></div>
-            <div><dt>184.868</dt><dd>FVD</dd></div>
-          </dl>
-        </div>
       </section>
 
       <section class="results section-shell section-wide" id="results" data-section aria-labelledby="results-title">
@@ -231,43 +218,79 @@
       </section>
 
       <section class="showcase section-shell section-wide" aria-labelledby="showcase-title">
-        <div class="section-heading reveal">
+        <div class="section-heading section-heading-centered reveal">
           <p class="section-kicker">More MirrorWorld results</p>
-          <h2 id="showcase-title">Reflections across spaces, motion, and viewpoints.</h2>
+          <h2 id="showcase-title">Generated Reflection</h2>
         </div>
-        <div class="showcase-grid">
-          <figure class="result-card result-card-featured reveal">
-            <video class="ambient-video" src="static/videos/showcase/figure-d-scene0084-01.mp4" controls muted loop playsinline preload="metadata" aria-label="MirrorWorld result, Figure D, scene 0084"></video>
-            <figcaption><span>Figure D</span><strong>Scene 0084 · moving camera</strong></figcaption>
-          </figure>
-          <figure class="result-card reveal">
-            <video class="ambient-video" src="static/videos/showcase/figure-e-scene0268.mp4" controls muted loop playsinline preload="metadata" aria-label="MirrorWorld result, Figure E, scene 0268"></video>
-            <figcaption><span>Figure E</span><strong>Scene 0268</strong></figcaption>
-          </figure>
-          <figure class="result-card reveal">
-            <video class="ambient-video" src="static/videos/showcase/figure-f-scene0083.mp4" controls muted loop playsinline preload="metadata" aria-label="MirrorWorld result, Figure F, scene 0083"></video>
-            <figcaption><span>Figure F</span><strong>Scene 0083</strong></figcaption>
-          </figure>
-          <figure class="result-card result-card-tall reveal">
-            <video class="ambient-video" src="static/videos/showcase/figure-g-zoom-vid42.mp4" controls muted loop playsinline preload="metadata" aria-label="MirrorWorld result on ZOOM video 42"></video>
-            <figcaption><span>Figure G · ZOOM</span><strong>Video 42</strong></figcaption>
-          </figure>
-          <figure class="result-card reveal">
-            <video class="ambient-video" src="static/videos/showcase/figure-f-scene0165.mp4" controls muted loop playsinline preload="metadata" aria-label="MirrorWorld result, Figure F, scene 0165"></video>
-            <figcaption><span>Figure F</span><strong>Scene 0165</strong></figcaption>
-          </figure>
-          <figure class="result-card reveal">
-            <video class="ambient-video" src="static/videos/showcase/figure-f-bathroom.mp4" controls muted loop playsinline preload="metadata" aria-label="MirrorWorld result in bathroom scene 0002"></video>
-            <figcaption><span>Figure F</span><strong>Bathroom 0002</strong></figcaption>
-          </figure>
-          <figure class="result-card reveal">
-            <video class="ambient-video" src="static/videos/showcase/figure-g-vmdd-015.mp4" controls muted loop playsinline preload="metadata" aria-label="MirrorWorld result on VMD-D scene 015"></video>
-            <figcaption><span>Figure G · VMD-D</span><strong>Scene 015</strong></figcaption>
-          </figure>
-          <figure class="result-card result-card-wide reveal">
-            <video class="ambient-video" src="static/videos/showcase/figure-g-vmdd-080.mp4" controls muted loop playsinline preload="metadata" aria-label="MirrorWorld result on VMD-D scene 080"></video>
-            <figcaption><span>Figure G · VMD-D</span><strong>Scene 080</strong></figcaption>
-          </figure>
+        <div class="generated-pairs">
+          <article class="generated-pair reveal" data-video-group="generated-scene-0268">
+            <div class="paired-media">
+              <p class="media-label">Video with mask</p>
+              <video src="static/videos/task/scene0268-mask.mp4" controls muted loop playsinline preload="metadata" aria-label="Masked input for the first generated reflection example"></video>
+            </div>
+            <div class="paired-media generated-media">
+              <p class="media-label">Generated video</p>
+              <video src="static/videos/showcase/figure-e-scene0268.mp4" controls muted loop playsinline preload="metadata" aria-label="Generated reflection for the first example"></video>
+            </div>
+          </article>
+          <article class="generated-pair reveal" data-video-group="generated-bathroom-0002">
+            <div class="paired-media">
+              <p class="media-label">Video with mask</p>
+              <video src="static/videos/task/bathroom-0002-mask.mp4" controls muted loop playsinline preload="metadata" aria-label="Masked input for the second generated reflection example"></video>
+            </div>
+            <div class="paired-media generated-media">
+              <p class="media-label">Generated video</p>
+              <video src="static/videos/showcase/figure-f-bathroom.mp4" controls muted loop playsinline preload="metadata" aria-label="Generated reflection for the second example"></video>
+            </div>
+          </article>
+          <article class="generated-pair reveal" data-video-group="generated-zoom-vid42">
+            <div class="paired-media">
+              <p class="media-label">Video with mask</p>
+              <video src="static/videos/task/zoom-vid42-mask.mp4" controls muted loop playsinline preload="metadata" aria-label="Masked input for the third generated reflection example"></video>
+            </div>
+            <div class="paired-media generated-media">
+              <p class="media-label">Generated video</p>
+              <video src="static/videos/showcase/figure-g-zoom-vid42.mp4" controls muted loop playsinline preload="metadata" aria-label="Generated reflection for the third example"></video>
+            </div>
+          </article>
+        </div>
+
+        <div class="mirror-try">
+          <div class="section-heading section-heading-centered reveal">
+            <h2>More Mirrors? Let's try!</h2>
+          </div>
+          <div class="mirror-pairs">
+            <article class="mirror-pair reveal" data-video-group="try-scene-0083">
+              <div class="paired-media">
+                <p class="media-label">Video with mask</p>
+                <video src="static/videos/task/scene0083-mask.mp4?v=2" controls muted loop playsinline preload="metadata" aria-label="Masked input video for the first additional mirror example"></video>
+              </div>
+              <div class="paired-media generated-media">
+                <p class="media-label">Generated video</p>
+                <video src="static/videos/showcase/figure-f-scene0083.mp4" controls muted loop playsinline preload="metadata" aria-label="Generated reflection video for the first additional mirror example"></video>
+              </div>
+            </article>
+            <article class="mirror-pair reveal" data-video-group="try-scene-0165">
+              <div class="paired-media">
+                <p class="media-label">Video with mask</p>
+                <video src="static/videos/task/scene0165-mask.mp4?v=2" controls muted loop playsinline preload="metadata" aria-label="Masked input video for the second additional mirror example"></video>
+              </div>
+              <div class="paired-media generated-media">
+                <p class="media-label">Generated video</p>
+                <video src="static/videos/showcase/figure-f-scene0165.mp4" controls muted loop playsinline preload="metadata" aria-label="Generated reflection video for the second additional mirror example"></video>
+              </div>
+            </article>
+            <article class="mirror-pair reveal" data-video-group="try-vmdd-015">
+              <div class="paired-media">
+                <p class="media-label">Video with mask</p>
+                <video src="static/videos/task/vmdd-015-mask.mp4?v=2" controls muted loop playsinline preload="metadata" aria-label="Masked input video for the third additional mirror example"></video>
+              </div>
+              <div class="paired-media generated-media">
+                <p class="media-label">Generated video</p>
+                <video src="static/videos/showcase/figure-g-vmdd-015.mp4" controls muted loop playsinline preload="metadata" aria-label="Generated reflection video for the third additional mirror example"></video>
+              </div>
+            </article>
+          </div>
         </div>
       </section>
 
@@ -389,14 +412,14 @@
     <footer class="site-footer">
       <div class="section-shell footer-inner">
         <div>
-          <a class="wordmark footer-mark" href="#overview"><span class="wordmark-mark" aria-hidden="true"></span>MirrorWorld</a>
+          <a class="wordmark footer-mark" href="#top"><span class="wordmark-mark" aria-hidden="true"></span>MirrorWorld</a>
           <p>Taming Video Diffusion Models for Mirror Reflection Generation</p>
         </div>
         <p class="footer-note">
           Research demonstrations are presented for academic communication. All shown
           videos are sourced from the paper's benchmark and method outputs.
         </p>
-        <a class="back-to-top" href="#overview">Back to top ↑</a>
+        <a class="back-to-top" href="#top">Back to top ↑</a>
       </div>
     </footer>
   </body>

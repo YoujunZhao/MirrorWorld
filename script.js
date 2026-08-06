@@ -22,6 +22,16 @@
     videos.forEach((video) => video.pause());
   };
 
+  const syncAmbientPlayback = (videos) => {
+    const visibleVideos = videos.filter(
+      (video) => !document.hidden && !reducedMotion.matches && video.dataset.inViewport !== 'false'
+    );
+    const pausedVideos = videos.filter((video) => !visibleVideos.includes(video));
+
+    pauseVideos(pausedVideos);
+    playVideos(visibleVideos);
+  };
+
   const updateToggle = (button, paused) => {
     if (!button) return;
     button.setAttribute('aria-pressed', String(paused));
@@ -32,6 +42,7 @@
   };
 
   const videoGroups = [...document.querySelectorAll('[data-video-group]')];
+  const ambientVideos = [...document.querySelectorAll('.ambient-video')];
 
   videoGroups.forEach((group) => {
     const groupName = group.dataset.videoGroup;
@@ -71,26 +82,25 @@
       (entries) => {
         entries.forEach((entry) => {
           const video = entry.target;
-          if (entry.isIntersecting && !reducedMotion.matches && !video.dataset.userPaused) {
-            const attempt = video.play();
-            if (attempt && typeof attempt.catch === 'function') attempt.catch(() => {});
-          } else if (!entry.isIntersecting) {
-            video.pause();
-          }
+          video.dataset.inViewport = String(entry.isIntersecting);
+          syncAmbientPlayback([video]);
         });
       },
       { threshold: 0.35 }
     );
-    document.querySelectorAll('.ambient-video').forEach((video) => ambientObserver.observe(video));
+    ambientVideos.forEach((video) => ambientObserver.observe(video));
   }
 
-  document.querySelectorAll('.ambient-video').forEach((video) => {
-    video.addEventListener('pause', () => {
-      if (video.currentTime > 0 && !video.ended) video.dataset.userPaused = 'true';
-    });
-    video.addEventListener('play', () => {
-      delete video.dataset.userPaused;
-    });
+  syncAmbientPlayback(ambientVideos);
+
+  reducedMotion.addEventListener('change', () => {
+    const videos = [...document.querySelectorAll('.ambient-video')];
+    if (reducedMotion.matches) {
+      pauseVideos(videos);
+      return;
+    }
+
+    syncAmbientPlayback(videos);
   });
 
   const reveals = [...document.querySelectorAll('.reveal')];
@@ -158,6 +168,9 @@
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
       pauseVideos([...document.querySelectorAll('video')]);
+      return;
     }
+
+    syncAmbientPlayback(ambientVideos);
   });
 })();
