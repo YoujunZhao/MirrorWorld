@@ -1,7 +1,0 @@
-.DS_Store
-.omx/
-.superpowers/
-.worktrees/
-tmp/
-__pycache__/
-*.py[cod]
