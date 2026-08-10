@@ -12,7 +12,7 @@
 
 ## 📑 Todo List
 
-- [ ] Inference code & checkpoints for **MirrorWorld**
+- [ ] Inference code & checkpoints
 - [ ] Training code
 
 
