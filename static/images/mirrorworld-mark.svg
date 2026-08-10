@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">MirrorWorld mark</title>
+  <desc id="desc">A glass-like iridescent mirror mark</desc>
+  <defs>
+    <linearGradient id="glass" x1="8" y1="4" x2="56" y2="60" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".96"/>
+      <stop offset=".46" stop-color="#a78bfa" stop-opacity=".8"/>
+      <stop offset="1" stop-color="#67e8f9" stop-opacity=".48"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="2.2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <path d="M18 5h25L32 59H8z" fill="url(#glass)" filter="url(#glow)"/>
+  <path d="M39 2h4L31 62h-4z" fill="#ffffff" fill-opacity=".42"/>
+</svg>
