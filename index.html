@@ -11,9 +11,9 @@
     <meta property="og:description" content="Reflection-aware video generation through Semantic Relation Distillation and Geometric Transformation Alignment.">
     <meta name="twitter:card" content="summary_large_image">
     <title>MirrorWorld: Taming Video Diffusion Models for Mirror Reflection Generation</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=hero-dim-1">
     <script>document.documentElement.classList.add('js');</script>
-    <script src="script.js" defer></script>
+    <script src="script.js?v=hero-dim-1" defer></script>
   </head>
   <body id="top">
     <a class="skip-link" href="#main-content">Skip to content</a>
@@ -28,7 +28,6 @@
           <a href="#overview" data-nav-link>Overview</a>
           <a href="#results" data-nav-link>Results</a>
           <a href="#method" data-nav-link>Method</a>
-          <a href="#benchmark" data-nav-link>Benchmark</a>
           <a href="#bibtex" data-nav-link>BibTeX</a>
         </div>
       </nav>
@@ -64,7 +63,7 @@
           </p>
 
           <div class="hero-actions">
-            <a class="button button-primary" href="https://youjunzhao.github.io/MirrorWorld/">Arxiv</a>
+            <a class="button button-primary" href="https://arxiv.org/abs/2608.07463">Arxiv</a>
             <a class="button button-primary" href="https://github.com/YoujunZhao/MirrorWorld">
               Code
             </a>
@@ -108,189 +107,6 @@
               </figure>
             </div>
           </article>
-        </div>
-      </section>
-
-      <section class="statement section-shell" aria-labelledby="statement-title">
-        <div class="statement-number reveal" aria-hidden="true">01</div>
-        <div class="statement-copy reveal">
-          <p class="section-kicker">The challenge</p>
-          <h2 id="statement-title">A mirror is not an empty canvas.</h2>
-          <p>
-            Its content is constrained by the visible world. Existing video diffusion
-            models can synthesize a convincing room yet place the wrong object, person,
-            or geometry inside its mirror. MirrorWorld explicitly models that
-            scene-to-mirror relationship.
-          </p>
-        </div>
-        <figure class="paper-figure teaser-figure reveal">
-          <img src="static/images/teaser.webp" alt="Examples where a video generator creates inconsistent mirror reflections for a chair, suitcase, and kettle" loading="lazy">
-          <figcaption>Advanced video generators remain visually convincing while getting the reflection wrong.</figcaption>
-        </figure>
-      </section>
-
-      <section class="results section-shell section-wide" id="results" data-section aria-labelledby="results-title">
-        <div class="section-heading results-heading reveal">
-          <div>
-            <p class="section-kicker">Qualitative comparison</p>
-            <h2 id="results-title">The same scene. A more faithful mirror.</h2>
-          </div>
-          <p>All methods receive the same masked video, mirror mask, and text prompt.</p>
-        </div>
-
-        <article class="comparison-case reveal" data-video-group="scene-0232">
-          <header class="comparison-header">
-            <div>
-              <p class="case-number">Case 01 · Figure 2</p>
-              <h3>Scene 0232</h3>
-            </div>
-            <button class="video-toggle" type="button" data-toggle-group="scene-0232" aria-pressed="false">
-              <span class="toggle-icon" aria-hidden="true">Ⅱ</span>
-              <span class="toggle-label">Pause all</span>
-            </button>
-          </header>
-          <div class="comparison-grid" role="group" aria-label="Scene 0232 method comparison">
-            <figure class="comparison-card input-card">
-              <div class="video-frame"><video src="static/videos/comparison/scene-0232/input.mp4" muted loop playsinline preload="metadata" aria-label="Masked input for scene 0232"></video></div>
-              <figcaption><span>Input</span><small>Masked mirror</small></figcaption>
-            </figure>
-            <figure class="comparison-card">
-              <div class="video-frame"><video src="static/videos/comparison/scene-0232/mirrorfusion.mp4" muted loop playsinline preload="metadata" aria-label="MirrorFusion result for scene 0232"></video></div>
-              <figcaption><span>MirrorFusion</span><small>Image-based</small></figcaption>
-            </figure>
-            <figure class="comparison-card">
-              <div class="video-frame"><video src="static/videos/comparison/scene-0232/mirrorverse.mp4" muted loop playsinline preload="metadata" aria-label="MirrorVerse result for scene 0232"></video></div>
-              <figcaption><span>MirrorVerse</span><small>Image-based</small></figcaption>
-            </figure>
-            <figure class="comparison-card">
-              <div class="video-frame"><video src="static/videos/comparison/scene-0232/videopainter.mp4" muted loop playsinline preload="metadata" aria-label="VideoPainter result for scene 0232"></video></div>
-              <figcaption><span>VideoPainter</span><small>Video inpainting</small></figcaption>
-            </figure>
-            <figure class="comparison-card">
-              <div class="video-frame"><video src="static/videos/comparison/scene-0232/vace.mp4" muted loop playsinline preload="metadata" aria-label="VACE result for scene 0232"></video></div>
-              <figcaption><span>VACE</span><small>Video inpainting</small></figcaption>
-            </figure>
-            <figure class="comparison-card ours-card">
-              <div class="video-frame"><video src="static/videos/comparison/scene-0232/mirrorworld.mp4" muted loop playsinline preload="metadata" aria-label="MirrorWorld result for scene 0232"></video></div>
-              <figcaption><span>MirrorWorld</span><small>Ours</small></figcaption>
-            </figure>
-          </div>
-        </article>
-
-        <article class="comparison-case reveal" data-video-group="scene-0084">
-          <header class="comparison-header">
-            <div>
-              <p class="case-number">Case 02 · Figure 2</p>
-              <h3>Scene 0084</h3>
-            </div>
-            <button class="video-toggle" type="button" data-toggle-group="scene-0084" aria-pressed="false">
-              <span class="toggle-icon" aria-hidden="true">Ⅱ</span>
-              <span class="toggle-label">Pause all</span>
-            </button>
-          </header>
-          <div class="comparison-grid" role="group" aria-label="Scene 0084 method comparison">
-            <figure class="comparison-card input-card">
-              <div class="video-frame"><video src="static/videos/comparison/scene-0084/input.mp4" muted loop playsinline preload="metadata" aria-label="Masked input for scene 0084"></video></div>
-              <figcaption><span>Input</span><small>Masked mirror</small></figcaption>
-            </figure>
-            <figure class="comparison-card">
-              <div class="video-frame"><video src="static/videos/comparison/scene-0084/mirrorfusion.mp4" muted loop playsinline preload="metadata" aria-label="MirrorFusion result for scene 0084"></video></div>
-              <figcaption><span>MirrorFusion</span><small>Image-based</small></figcaption>
-            </figure>
-            <figure class="comparison-card">
-              <div class="video-frame"><video src="static/videos/comparison/scene-0084/mirrorverse.mp4" muted loop playsinline preload="metadata" aria-label="MirrorVerse result for scene 0084"></video></div>
-              <figcaption><span>MirrorVerse</span><small>Image-based</small></figcaption>
-            </figure>
-            <figure class="comparison-card">
-              <div class="video-frame"><video src="static/videos/comparison/scene-0084/videopainter.mp4" muted loop playsinline preload="metadata" aria-label="VideoPainter result for scene 0084"></video></div>
-              <figcaption><span>VideoPainter</span><small>Video inpainting</small></figcaption>
-            </figure>
-            <figure class="comparison-card">
-              <div class="video-frame"><video src="static/videos/comparison/scene-0084/vace.mp4" muted loop playsinline preload="metadata" aria-label="VACE result for scene 0084"></video></div>
-              <figcaption><span>VACE</span><small>Video inpainting</small></figcaption>
-            </figure>
-            <figure class="comparison-card ours-card">
-              <div class="video-frame"><video src="static/videos/comparison/scene-0084/mirrorworld.mp4" muted loop playsinline preload="metadata" aria-label="MirrorWorld result for scene 0084"></video></div>
-              <figcaption><span>MirrorWorld</span><small>Ours</small></figcaption>
-            </figure>
-          </div>
-        </article>
-      </section>
-
-      <section class="showcase section-shell section-wide" aria-labelledby="showcase-title">
-        <div class="section-heading section-heading-centered reveal">
-          <p class="section-kicker">More MirrorWorld results</p>
-          <h2 id="showcase-title">Generated Reflection</h2>
-        </div>
-        <div class="generated-pairs">
-          <article class="generated-pair reveal" data-video-group="generated-scene-0268">
-            <div class="paired-media">
-              <p class="media-label">Video with mask</p>
-              <video src="static/videos/task/scene0268-mask.mp4" controls muted loop playsinline preload="metadata" aria-label="Masked input for the first generated reflection example"></video>
-            </div>
-            <div class="paired-media generated-media">
-              <p class="media-label">Generated video</p>
-              <video src="static/videos/showcase/figure-e-scene0268.mp4" controls muted loop playsinline preload="metadata" aria-label="Generated reflection for the first example"></video>
-            </div>
-          </article>
-          <article class="generated-pair reveal" data-video-group="generated-bathroom-0002">
-            <div class="paired-media">
-              <p class="media-label">Video with mask</p>
-              <video src="static/videos/task/bathroom-0002-mask.mp4" controls muted loop playsinline preload="metadata" aria-label="Masked input for the second generated reflection example"></video>
-            </div>
-            <div class="paired-media generated-media">
-              <p class="media-label">Generated video</p>
-              <video src="static/videos/showcase/figure-f-bathroom.mp4" controls muted loop playsinline preload="metadata" aria-label="Generated reflection for the second example"></video>
-            </div>
-          </article>
-          <article class="generated-pair reveal" data-video-group="generated-zoom-vid42">
-            <div class="paired-media">
-              <p class="media-label">Video with mask</p>
-              <video src="static/videos/task/zoom-vid42-mask.mp4" controls muted loop playsinline preload="metadata" aria-label="Masked input for the third generated reflection example"></video>
-            </div>
-            <div class="paired-media generated-media">
-              <p class="media-label">Generated video</p>
-              <video src="static/videos/showcase/figure-g-zoom-vid42.mp4" controls muted loop playsinline preload="metadata" aria-label="Generated reflection for the third example"></video>
-            </div>
-          </article>
-        </div>
-
-        <div class="mirror-try">
-          <div class="section-heading section-heading-centered reveal">
-            <h2>More Mirrors? Let's try!</h2>
-          </div>
-          <div class="mirror-pairs">
-            <article class="mirror-pair reveal" data-video-group="try-scene-0083">
-              <div class="paired-media">
-                <p class="media-label">Video with mask</p>
-                <video src="static/videos/task/scene0083-mask.mp4?v=2" controls muted loop playsinline preload="metadata" aria-label="Masked input video for the first additional mirror example"></video>
-              </div>
-              <div class="paired-media generated-media">
-                <p class="media-label">Generated video</p>
-                <video src="static/videos/showcase/figure-f-scene0083.mp4" controls muted loop playsinline preload="metadata" aria-label="Generated reflection video for the first additional mirror example"></video>
-              </div>
-            </article>
-            <article class="mirror-pair reveal" data-video-group="try-scene-0165">
-              <div class="paired-media">
-                <p class="media-label">Video with mask</p>
-                <video src="static/videos/task/scene0165-mask.mp4?v=2" controls muted loop playsinline preload="metadata" aria-label="Masked input video for the second additional mirror example"></video>
-              </div>
-              <div class="paired-media generated-media">
-                <p class="media-label">Generated video</p>
-                <video src="static/videos/showcase/figure-f-scene0165.mp4" controls muted loop playsinline preload="metadata" aria-label="Generated reflection video for the second additional mirror example"></video>
-              </div>
-            </article>
-            <article class="mirror-pair reveal" data-video-group="try-vmdd-015">
-              <div class="paired-media">
-                <p class="media-label">Video with mask</p>
-                <video src="static/videos/task/vmdd-015-mask.mp4?v=2" controls muted loop playsinline preload="metadata" aria-label="Masked input video for the third additional mirror example"></video>
-              </div>
-              <div class="paired-media generated-media">
-                <p class="media-label">Generated video</p>
-                <video src="static/videos/showcase/figure-g-vmdd-015.mp4" controls muted loop playsinline preload="metadata" aria-label="Generated reflection video for the third additional mirror example"></video>
-              </div>
-            </article>
-          </div>
         </div>
       </section>
 
@@ -340,53 +156,197 @@
         </div>
       </section>
 
-      <section class="benchmark section-shell" id="benchmark" data-section aria-labelledby="benchmark-title">
-        <div class="section-heading benchmark-heading reveal">
+      <section class="results section-shell section-wide" id="results" data-section aria-labelledby="results-title">
+        <div class="section-heading results-heading reveal">
           <div>
-            <p class="section-kicker">Benchmark</p>
-            <h2 id="benchmark-title">A unified test for video mirror reconstruction.</h2>
+            <p class="section-kicker">Qualitative comparison</p>
+            <h2 id="results-title">From Implausible to Plausible</h2>
           </div>
-          <p>
-            We repurpose VMD-D, ZOOM, MMD, and DVMD-D into one reflection-aware
-            reconstruction task, split at the source-video level.
-          </p>
+          <div class="results-copy">
+            <p>
+              Given the same masked video and text prompt, existing video inpainting methods
+              can produce plausible-looking scenes while placing the wrong content inside the
+              mirror. MirrorWorld restores the scene-to-mirror relationship and preserves the
+              reflection across time.
+            </p>
+          </div>
         </div>
 
-        <div class="benchmark-strip reveal" aria-label="Benchmark statistics">
-          <div><strong>1,142</strong><span>train clips</span></div>
-          <div><strong>100</strong><span>test clips</span></div>
-          <div><strong>≤49</strong><span>frames per clip</span></div>
-          <div><strong>4</strong><span>datasets</span></div>
-        </div>
-
-        <div class="table-card reveal">
-          <div class="table-intro">
+        <article class="comparison-board reveal" data-video-group="qualitative-comparison">
+          <header class="comparison-board-header">
             <div>
-              <p class="case-number">Quantitative evaluation</p>
-              <h3>Mirror-region reconstruction and video quality</h3>
+              <p class="case-number">Video mirror reconstruction</p>
+              <h3>Wan2.2-A14B</h3>
             </div>
-            <p>Best results are highlighted. PSNR, SSIM, and LPIPS are computed inside mirror regions.</p>
+            <button class="video-toggle" type="button" data-toggle-group="qualitative-comparison" aria-pressed="false">
+              <span class="toggle-icon" aria-hidden="true">Ⅱ</span>
+              <span class="toggle-label">Pause all</span>
+            </button>
+          </header>
+
+          <div class="comparison-table" role="table" aria-label="Qualitative method comparison">
+            <div class="comparison-method-row" role="row" aria-label="Input video with mask">
+              <div class="comparison-method-label" role="rowheader">Input video<br><small>with mask</small></div>
+              <figure class="comparison-card input-card" role="cell">
+                <div class="video-frame">
+                  <video src="static/videos/comparison/scene-0232/input.mp4" muted loop playsinline preload="metadata" aria-label="Masked input video for the first comparison scene"></video>
+                </div>
+              </figure>
+              <figure class="comparison-card input-card" role="cell">
+                <div class="video-frame">
+                  <video src="static/videos/comparison/scene-0084/input.mp4" muted loop playsinline preload="metadata" aria-label="Masked input video for the second comparison scene"></video>
+                </div>
+              </figure>
+              <div class="comparison-method-spacer" aria-hidden="true"></div>
+            </div>
+
+            <div class="comparison-method-row" role="row" aria-label="MirrorFusion">
+              <div class="comparison-method-label" role="rowheader">MirrorFusion<br><small>Image-based</small></div>
+              <figure class="comparison-card" role="cell"><div class="video-frame"><video src="static/videos/comparison/scene-0232/mirrorfusion.mp4" muted loop playsinline preload="metadata" aria-label="MirrorFusion result for the first comparison scene"></video></div></figure>
+              <figure class="comparison-card" role="cell"><div class="video-frame"><video src="static/videos/comparison/scene-0084/mirrorfusion.mp4" muted loop playsinline preload="metadata" aria-label="MirrorFusion result for the second comparison scene"></video></div></figure>
+              <div class="comparison-method-spacer" aria-hidden="true"></div>
+            </div>
+
+            <div class="comparison-method-row" role="row" aria-label="MirrorVerse">
+              <div class="comparison-method-label" role="rowheader">MirrorVerse<br><small>Image-based</small></div>
+              <figure class="comparison-card" role="cell"><div class="video-frame"><video src="static/videos/comparison/scene-0232/mirrorverse.mp4" muted loop playsinline preload="metadata" aria-label="MirrorVerse result for the first comparison scene"></video></div></figure>
+              <figure class="comparison-card" role="cell"><div class="video-frame"><video src="static/videos/comparison/scene-0084/mirrorverse.mp4" muted loop playsinline preload="metadata" aria-label="MirrorVerse result for the second comparison scene"></video></div></figure>
+              <div class="comparison-method-spacer" aria-hidden="true"></div>
+            </div>
+
+            <div class="comparison-method-row" role="row" aria-label="VideoPainter">
+              <div class="comparison-method-label" role="rowheader">VideoPainter<br><small>Video inpainting</small></div>
+              <figure class="comparison-card" role="cell"><div class="video-frame"><video src="static/videos/comparison/scene-0232/videopainter.mp4" muted loop playsinline preload="metadata" aria-label="VideoPainter result for the first comparison scene"></video></div></figure>
+              <figure class="comparison-card" role="cell"><div class="video-frame"><video src="static/videos/comparison/scene-0084/videopainter.mp4" muted loop playsinline preload="metadata" aria-label="VideoPainter result for the second comparison scene"></video></div></figure>
+              <div class="comparison-method-spacer" aria-hidden="true"></div>
+            </div>
+
+            <div class="comparison-method-row" role="row" aria-label="VACE">
+              <div class="comparison-method-label" role="rowheader">VACE<br><small>Video inpainting</small></div>
+              <figure class="comparison-card" role="cell"><div class="video-frame"><video src="static/videos/comparison/scene-0232/vace.mp4" muted loop playsinline preload="metadata" aria-label="VACE result for the first comparison scene"></video></div></figure>
+              <figure class="comparison-card" role="cell">
+                <div class="video-frame">
+                  <video src="static/videos/comparison/scene-0084/vace.mp4" muted loop playsinline preload="metadata" aria-label="VACE result for the second comparison scene"></video>
+                </div>
+              </figure>
+              <div class="comparison-method-spacer" aria-hidden="true"></div>
+            </div>
+
+            <div class="comparison-method-row ours-method-row" role="row" aria-label="MirrorWorld">
+              <div class="comparison-method-label ours-label" role="rowheader">MirrorWorld<br><small>Ours</small></div>
+              <figure class="comparison-card ours-card" role="cell"><div class="video-frame"><video src="static/videos/comparison/scene-0232/mirrorworld.mp4" muted loop playsinline preload="metadata" aria-label="MirrorWorld result for the first comparison scene"></video></div></figure>
+              <figure class="comparison-card ours-card" role="cell"><div class="video-frame"><video src="static/videos/comparison/scene-0084/mirrorworld.mp4" muted loop playsinline preload="metadata" aria-label="MirrorWorld result for the second comparison scene"></video></div></figure>
+              <div class="comparison-method-spacer" aria-hidden="true"></div>
+            </div>
           </div>
-          <div class="table-scroll" tabindex="0" aria-label="Scrollable quantitative results table">
-            <table>
-              <thead>
-                <tr><th>Method</th><th>Type</th><th>PSNR ↑</th><th>SSIM ↑</th><th>LPIPS ↓</th><th>FVD ↓</th></tr>
-              </thead>
-              <tbody>
-                <tr><th>MirrorFusion</th><td>Image</td><td>9.508</td><td>0.293</td><td>0.699</td><td>513.062</td></tr>
-                <tr><th>MirrorVerse</th><td>Image</td><td>9.666</td><td>0.312</td><td>0.680</td><td>416.146</td></tr>
-                <tr><th>VideoPainter</th><td>Video</td><td>11.282</td><td>0.399</td><td>0.606</td><td>229.558</td></tr>
-                <tr><th>VACE</th><td>Video</td><td><u>13.537</u></td><td><u>0.489</u></td><td><u>0.493</u></td><td><u>191.617</u></td></tr>
-                <tr class="ours-row"><th>MirrorWorld <span>Ours</span></th><td>Video</td><td><strong>14.005</strong></td><td><strong>0.504</strong></td><td><strong>0.488</strong></td><td><strong>184.868</strong></td></tr>
-              </tbody>
-            </table>
-          </div>
+        </article>
+      </section>
+
+      <section class="showcase section-shell section-wide" aria-labelledby="showcase-title">
+        <div class="section-heading section-heading-centered reveal">
+          <p class="section-kicker">More MirrorWorld results</p>
+          <h2 id="showcase-title">Generated Reflection</h2>
+        </div>
+        <div class="generated-pairs">
+          <article class="generated-pair reveal" data-video-group="generated-scene-0268">
+            <div class="paired-media">
+              <p class="media-label">Video with mask</p>
+              <video src="static/videos/task/scene0268-mask.mp4" controls muted loop playsinline preload="metadata" aria-label="Masked input for the first generated reflection example"></video>
+            </div>
+            <div class="paired-media generated-media">
+              <p class="media-label">Generated video</p>
+              <video src="static/videos/showcase/figure-e-scene0268.mp4" controls muted loop playsinline preload="metadata" aria-label="Generated reflection for the first example"></video>
+            </div>
+          </article>
+          <article class="generated-pair reveal" data-video-group="generated-bathroom-0002">
+            <div class="paired-media">
+              <p class="media-label">Video with mask</p>
+              <video src="static/videos/task/bathroom-0002-mask.mp4" controls muted loop playsinline preload="metadata" aria-label="Masked input for the second generated reflection example"></video>
+            </div>
+            <div class="paired-media generated-media">
+              <p class="media-label">Generated video</p>
+              <video src="static/videos/showcase/figure-f-bathroom.mp4" controls muted loop playsinline preload="metadata" aria-label="Generated reflection for the second example"></video>
+            </div>
+          </article>
+          <article class="generated-pair reveal" data-video-group="generated-zoom-vid42">
+            <div class="paired-media">
+              <p class="media-label">Video with mask</p>
+              <video src="static/videos/task/zoom-vid42-mask.mp4" controls muted loop playsinline preload="metadata" aria-label="Masked input for the third generated reflection example"></video>
+            </div>
+            <div class="paired-media generated-media">
+              <p class="media-label">Generated video</p>
+              <video src="static/videos/showcase/figure-g-zoom-vid42.mp4" controls muted loop playsinline preload="metadata" aria-label="Generated reflection for the third example"></video>
+            </div>
+          </article>
+          <article class="generated-pair reveal" data-video-group="generated-more-bedroom">
+            <div class="paired-media">
+              <p class="media-label">Video with mask</p>
+              <video src="static/videos/task/more-mirrorworld/bedroom-0096-part001-mask.mp4" controls muted loop playsinline preload="metadata" aria-label="Masked input for an additional generated reflection example"></video>
+            </div>
+            <div class="paired-media generated-media">
+              <p class="media-label">Generated video</p>
+              <video src="static/videos/showcase/more-mirrorworld/bedroom-0096-part001.mp4" controls muted loop playsinline preload="metadata" aria-label="Generated reflection for an additional example"></video>
+            </div>
+          </article>
+          <article class="generated-pair reveal" data-video-group="generated-more-0268">
+            <div class="paired-media">
+              <p class="media-label">Video with mask</p>
+              <video src="static/videos/task/more-mirrorworld/scene-0268-01-01-part001-mask.mp4" controls muted loop playsinline preload="metadata" aria-label="Masked input for an additional generated reflection example"></video>
+            </div>
+            <div class="paired-media generated-media">
+              <p class="media-label">Generated video</p>
+              <video src="static/videos/showcase/more-mirrorworld/scene-0268-01-01-part001.mp4" controls muted loop playsinline preload="metadata" aria-label="Generated reflection for an additional example"></video>
+            </div>
+          </article>
+          <article class="generated-pair reveal" data-video-group="generated-more-0051">
+            <div class="paired-media">
+              <p class="media-label">Video with mask</p>
+              <video src="static/videos/task/more-mirrorworld/scene-0051-03-00-mask.mp4" controls muted loop playsinline preload="metadata" aria-label="Masked input for an additional generated reflection example"></video>
+            </div>
+            <div class="paired-media generated-media">
+              <p class="media-label">Generated video</p>
+              <video src="static/videos/showcase/more-mirrorworld/scene-0051-03-00.mp4" controls muted loop playsinline preload="metadata" aria-label="Generated reflection for an additional example"></video>
+            </div>
+          </article>
         </div>
 
-        <figure class="paper-figure qualitative-figure reveal">
-          <img src="static/images/qualitative.webp" alt="Frame-level qualitative comparison of MirrorWorld with MirrorFusion, MirrorVerse, VideoPainter, and VACE" loading="lazy">
-          <figcaption>Frame-level view from the paper. The interactive videos above show the corresponding temporal behavior.</figcaption>
-        </figure>
+        <div class="mirror-try">
+          <div class="section-heading section-heading-centered reveal">
+            <h2>More Mirrors? Let's try!</h2>
+          </div>
+          <div class="mirror-pairs">
+            <article class="mirror-pair reveal" data-video-group="try-scene-0083">
+              <div class="paired-media">
+                <p class="media-label">Video with mask</p>
+                <video src="static/videos/task/scene0083-mask.mp4?v=2" controls muted loop playsinline preload="metadata" aria-label="Masked input video for the first additional mirror example"></video>
+              </div>
+              <div class="paired-media generated-media">
+                <p class="media-label">Generated video</p>
+                <video src="static/videos/showcase/figure-f-scene0083.mp4" controls muted loop playsinline preload="metadata" aria-label="Generated reflection video for the first additional mirror example"></video>
+              </div>
+            </article>
+            <article class="mirror-pair reveal" data-video-group="try-scene-0165">
+              <div class="paired-media">
+                <p class="media-label">Video with mask</p>
+                <video src="static/videos/task/scene0165-mask.mp4?v=2" controls muted loop playsinline preload="metadata" aria-label="Masked input video for the second additional mirror example"></video>
+              </div>
+              <div class="paired-media generated-media">
+                <p class="media-label">Generated video</p>
+                <video src="static/videos/showcase/figure-f-scene0165.mp4" controls muted loop playsinline preload="metadata" aria-label="Generated reflection video for the second additional mirror example"></video>
+              </div>
+            </article>
+            <article class="mirror-pair reveal" data-video-group="try-vmdd-015">
+              <div class="paired-media">
+                <p class="media-label">Video with mask</p>
+                <video src="static/videos/task/vmdd-015-mask.mp4?v=2" controls muted loop playsinline preload="metadata" aria-label="Masked input video for the third additional mirror example"></video>
+              </div>
+              <div class="paired-media generated-media">
+                <p class="media-label">Generated video</p>
+                <video src="static/videos/showcase/figure-g-vmdd-015.mp4" controls muted loop playsinline preload="metadata" aria-label="Generated reflection video for the third additional mirror example"></video>
+              </div>
+            </article>
+          </div>
+        </div>
       </section>
 
       <section class="citation section-shell" id="bibtex" data-section aria-labelledby="bibtex-title">
