@@ -910,7 +910,10 @@ a.button:hover {
 }
 
 .framework-figure {
+  width: min(88%, 980px);
   margin-top: 58px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .method-cards {
@@ -1433,6 +1436,10 @@ tbody tr:last-child td {
 
   .method-card {
     min-height: 360px;
+  }
+
+  .framework-figure {
+    width: 100%;
   }
 
   .benchmark-strip div {
