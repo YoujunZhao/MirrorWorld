@@ -10,6 +10,10 @@
 
 </div>
 
+<p align="center">
+  <img src="static/images/mirrorworld-hero-mosaic.gif" alt="Animated 2×3 mosaic of MirrorWorld reflection results" width="900">
+</p>
+
 ## 📑 Todo List
 
 - [ ] Inference code & checkpoints
