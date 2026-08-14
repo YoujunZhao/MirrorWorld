@@ -2,7 +2,7 @@
 
 # MirrorWorld: Taming Video Diffusion Models for Mirror Reflection Generation
 
-**Youjun Zhao<sup>1</sup>**, **Alex Warren<sup>2</sup>**, **Gary K. L. Tam<sup>2</sup>**, **Rynson W. H. Lau<sup>1</sup>**
+[**Youjun Zhao**](https://youjunzhao.github.io/)<sup>1</sup>, **Alex Warren<sup>2</sup>**, **Gary K. L. Tam<sup>2</sup>**, **Rynson W. H. Lau<sup>1</sup>**
 
 <sup>1</sup>City University of Hong Kong &nbsp;&nbsp; <sup>2</sup>Swansea University
 
