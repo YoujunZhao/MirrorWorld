@@ -18,6 +18,7 @@
 
 - [ ] Inference code & checkpoints
 - [ ] Training code
+- [ ] Benchmark data
 
 
 
