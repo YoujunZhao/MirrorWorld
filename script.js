@@ -49,7 +49,7 @@
     const handle = slider.querySelector('[data-slider-handle]');
     if (!handle) return;
     handle.setAttribute('aria-valuenow', String(Math.round(position)));
-    handle.setAttribute('aria-valuetext', position <= 5 ? 'Generated video' : position >= 95 ? 'Input video with mask' : 'Input and generated video');
+    handle.setAttribute('aria-valuetext', position <= 5 ? 'Reflection' : position >= 95 ? 'Input' : 'Input and reflection');
     handle.setAttribute('aria-pressed', String(position <= 5 || position >= 95));
   };
 
