@@ -26,13 +26,10 @@
 
 
 ```bibtex
-@misc{mirrorworld,
-  title        = {MirrorWorld: Taming Video Diffusion Models for Mirror Reflection Generation},
-  author       = {Youjun Zhao and Alex Warren and Gary K. L. Tam and Rynson W. H. Lau},
-  year         = {2026},
-  eprint       = {2608.07463},
-  archivePrefix = {arXiv},
-  primaryClass = {cs.CV},
-  url          = {https://arxiv.org/abs/2608.07463},
+@article{zhao2026mirrorworld,
+  title={MirrorWorld: Taming Video Diffusion Models for Mirror Reflection Generation},
+  author={Zhao, Youjun and Warren, Alex and Tam, Gary KL and Lau, Rynson WH},
+  journal={arXiv preprint arXiv:2608.07463},
+  year={2026}
 }
 ```
