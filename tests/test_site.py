@@ -506,6 +506,9 @@ class SiteContractTests(unittest.TestCase):
             any("arXiv" in element.normalized_text for element in bibtex_sections),
             "Expected the BibTeX section to contain the arXiv entry",
         )
+        bibtex_text = " ".join(element.normalized_text for element in bibtex_sections)
+        self.assertIn("@article{zhao2026mirrorworld,", bibtex_text)
+        self.assertIn("journal={arXiv preprint arXiv:2608.07463}", bibtex_text)
 
     def test_overview_pairs_abstract_before_task_demo(self) -> None:
         _, parser = self.parse_index()
@@ -702,9 +705,9 @@ class SiteContractTests(unittest.TestCase):
             [element.normalized_text for element in task_captions],
             [
                 "Input video with mask",
-                "Generated video",
+                "Generated Reflection",
                 "Input video with mask",
-                "Generated video",
+                "Generated Reflection",
             ],
         )
 
@@ -809,6 +812,24 @@ class SiteContractTests(unittest.TestCase):
 
     def test_result_tiers_use_caption_free_uniform_media(self) -> None:
         html, parser = self.parse_index()
+
+        comparison_labels = [
+            element.normalized_text
+            for element in parser.elements
+            if element.tag == "span"
+            and "video-slider-label" in (element.attrs.get("class") or "").split()
+        ]
+        self.assertEqual(comparison_labels, ["Input", "Reflection"] * 9)
+        self.assertNotIn("Input video with mask", comparison_labels)
+        self.assertNotIn("Generated video", comparison_labels)
+
+        css = self.read_required_text("styles.css")
+        self.assertRegex(css, re.compile(r"\.video-slider-stage:hover \.video-slider-label"))
+        self.assertRegex(css, re.compile(r"\.video-slider-stage:hover::after"))
+        self.assertRegex(css, re.compile(r"background:\s*rgba\(0,\s*0,\s*0,\s*0\.5\)"))
+        self.assertRegex(css, re.compile(r"background:\s*rgba\(255,\s*255,\s*255,\s*0\.2\)"))
+        self.assertRegex(css, re.compile(r"border-radius:\s*2px;"))
+        self.assertNotRegex(css, re.compile(r"\.video-slider-label\s*\{[^}]*text-transform", flags=re.DOTALL))
 
         generated_pairs = [
             element
@@ -1040,7 +1061,8 @@ class SiteContractTests(unittest.TestCase):
             self.assertIn(author, readme, f"Missing author in README.md: {author}")
         self.assertIn(CODE_URL, readme)
         self.assertRegex(readme, re.compile(r"Paper.*Coming soon", re.IGNORECASE))
-        self.assertRegex(readme, re.compile(r"BibTeX.*placeholder", re.IGNORECASE | re.DOTALL))
+        self.assertIn("@article{zhao2026mirrorworld,", readme)
+        self.assertIn("journal={arXiv preprint arXiv:2608.07463}", readme)
 
 
 if __name__ == "__main__":
