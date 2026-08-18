@@ -538,6 +538,23 @@ a.button:hover {
   clip-path: inset(0 calc(100% - var(--slider-position)) 0 0);
 }
 
+.video-slider-stage::after {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  content: "";
+  background: rgba(0, 0, 0, 0);
+  pointer-events: none;
+  transition: background 500ms ease;
+}
+
+/* Match the Rose/TwentyTwenty comparison: the hover overlay darkens the
+   media while the divider and labels stay crisp above it. */
+.video-slider-stage:hover::after,
+.video-slider-stage:focus-within::after {
+  background: rgba(0, 0, 0, 0.5);
+}
+
 .video-slider-divider {
   position: absolute;
   z-index: 4;
@@ -600,29 +617,38 @@ a.button:hover {
 .video-slider-label {
   position: absolute;
   z-index: 5;
-  display: none;
-  top: 14px;
-  max-width: calc(50% - 18px);
-  padding: 6px 8px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 999px;
-  background: rgba(5, 6, 9, 0.7);
+  display: inline-flex;
+  align-items: center;
+  top: 50%;
+  height: 38px;
+  padding: 0 20px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.2);
   color: #f3f4f8;
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  line-height: 1;
-  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  line-height: 38px;
+  opacity: 0;
   pointer-events: none;
+  transform: translateY(-50%);
+  transition: opacity 500ms ease, visibility 500ms ease;
+  visibility: hidden;
   white-space: nowrap;
 }
 
+.video-slider-stage:hover .video-slider-label,
+.video-slider-stage:focus-within .video-slider-label {
+  opacity: 1;
+  visibility: visible;
+}
+
 .video-slider-label-input {
-  left: 14px;
+  left: 10px;
 }
 
 .video-slider-label-output {
-  right: 14px;
+  right: 10px;
 }
 
 .media-label {
